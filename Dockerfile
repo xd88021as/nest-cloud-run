@@ -1,6 +1,6 @@
 FROM node:18-alpine3.17 as builder
 WORKDIR /build
-COPY package*.json pnpm-lock.yaml ./
+COPY package*.json ./
 RUN npm install -g --quiet pnpm && pnpm install --ignore-scripts
 COPY . ./
 # pnpm prisma generate
