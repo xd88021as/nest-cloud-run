@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Commodity {
+  id       Int                @id @default(autoincrement())
+  uuid     String             @unique @default(uuid()) @db.Uuid
+  name     String
+  unitCent Int                @map("unit_cent")
+  //
+  shop     Shop               @relation(fields: [shopId], references: [id])
+  shopId   Int                @map("shop_id")
+  //
+  options  CommodityOptions[]
+
+  @@map("commodity")
+}
+
+model CommodityOptions {
+  id          Int       @id @default(autoincrement())
+  name        String
+  unitCent    Int       @map("unit_cent")
+  //
+  commodity   Commodity @relation(fields: [commodityId], references: [id])
+  commodityId Int       @map("commodity_id")
+
+  @@map("commodity_options")
+}
+
+model Gender {
+  id        Int      @id
+  name      String   @unique
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  //
+  users     User[]
+
+  @@map("gender")
+}
+
+model Shop {
+  id                Int         @id @default(autoincrement())
+  uuid              String      @unique @default(uuid()) @db.Uuid
+  name              String      @unique @map("name")
+  localPhoneNumber  String?     @unique @map("local_phone_number")
+  mobilePhoneNumber String?     @map("mobile_phone_number")
+  introduce         String?     @map("introduce")
+  createdAt         DateTime    @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt         DateTime    @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  //
+  commoditys        Commodity[]
+  users             UserShop[]
+
+  @@map("shop")
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  uuid      String     @unique @default(uuid()) @db.Uuid
+  phone     String?    @unique
+  email     String?    @unique
+  password  String
+  firstName String?    @map("first_name")
+  lastName  String?    @map("last_name")
+  birthDate DateTime?  @map("birth_date") @db.Date
+  createdAt DateTime   @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime   @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  //
+  gender    Gender?    @relation(fields: [genderId], references: [id])
+  genderId  Int?       @map("gender_id")
+  //
+  shops     UserShop[]
+
+  @@map("user")
+}
+
+model UserShop {
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @map("user_id")
+  shop   Shop @relation(fields: [shopId], references: [id])
+  shopId Int  @map("shop_id")
+
+  @@id([userId, shopId])
+  @@map("user_shop")
+}
