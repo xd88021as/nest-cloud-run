@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './api/app.module';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -18,6 +19,12 @@ async function bootstrap() {
     exposedHeaders: 'Authorization',
     credentials: true,
   });
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+    }),
+  );
 
   const port = process.env.PORT || 8080;
   const address = process.env.ADDRESS || '0.0.0.0';

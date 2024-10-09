@@ -14,7 +14,7 @@
 
 建立 API 設定檔
 
-    cp libs/api/common/config/development-example.ts libs/api/common/config/development.ts
+    cp libs/common/config/development-example.ts libs/common/config/development.ts
 
 設定資料庫連線（每次改資料庫 IP 都要做）
 
