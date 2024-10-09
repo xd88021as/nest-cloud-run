@@ -1,34 +1,8 @@
-import { Expose, Transform } from 'class-transformer';
-import { IsInt, IsOptional } from 'class-validator';
-import { PartialType, PickType } from '@nestjs/mapped-types';
+import { IntersectionType, PartialType, PickType } from '@nestjs/mapped-types';
 import { UserShopBaseDto } from '../shop.base.dto';
+import { PageBaseDto } from '../page.base.dto';
 
-const reformatPage = ({ value }: { value: number }): number => {
-  if (!value) {
-    return 1;
-  }
-  return +value;
-};
-
-const reformatLimit = ({ value }: { value: number }): number => {
-  if (!value) {
-    return 10;
-  }
-  return +value;
-};
-
-export class ShopFindManyQueryDto extends PartialType(
-  PickType(UserShopBaseDto, ['userUuid'] as const)
-) {
-  @Expose()
-  @Transform(reformatPage)
-  @IsInt()
-  @IsOptional()
-  page?: number;
-
-  @Expose()
-  @Transform(reformatLimit)
-  @IsInt()
-  @IsOptional()
-  limit?: number;
-}
+export class ShopFindManyQueryDto extends IntersectionType(
+  PartialType(PickType(UserShopBaseDto, ['userUuid'] as const)),
+  PartialType(PageBaseDto)
+) {}

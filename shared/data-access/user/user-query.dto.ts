@@ -1,24 +1,12 @@
-import { Expose, Transform } from 'class-transformer';
-import { IsDateString, IsInt, IsOptional } from 'class-validator';
-import { PartialType, PickType } from '@nestjs/mapped-types';
+import { Expose } from 'class-transformer';
+import { IsDateString, IsOptional } from 'class-validator';
+import { IntersectionType, PartialType, PickType } from '@nestjs/mapped-types';
 import { UserBaseDto } from '../user.base.dto';
+import { PageBaseDto } from '../page.base.dto';
 
-const reformatPage = ({ value }: { value: number }): number => {
-  if (!value) {
-    return 1;
-  }
-  return +value;
-};
-
-const reformatLimit = ({ value }: { value: number }): number => {
-  if (!value) {
-    return 10;
-  }
-  return +value;
-};
-
-export class UserFindManyQueryDto extends PartialType(
-  PickType(UserBaseDto, ['genderName'] as const)
+export class UserFindManyQueryDto extends IntersectionType(
+  PartialType(PickType(UserBaseDto, ['genderName'] as const)),
+  PartialType(PageBaseDto)
 ) {
   @Expose()
   @IsDateString()
@@ -29,16 +17,4 @@ export class UserFindManyQueryDto extends PartialType(
   @IsDateString()
   @IsOptional()
   createdTo: Date;
-
-  @Expose()
-  @Transform(reformatPage)
-  @IsInt()
-  @IsOptional()
-  page?: number;
-
-  @Expose()
-  @Transform(reformatLimit)
-  @IsInt()
-  @IsOptional()
-  limit?: number;
 }

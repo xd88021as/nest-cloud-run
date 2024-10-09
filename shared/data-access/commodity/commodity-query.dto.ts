@@ -1,39 +1,15 @@
-import { PartialType, PickType } from '@nestjs/mapped-types';
-import { Expose, Transform } from 'class-transformer';
-import { IsInt, IsOptional, IsUUID } from 'class-validator';
+import { IntersectionType, PartialType, PickType } from '@nestjs/mapped-types';
+import { Expose } from 'class-transformer';
+import { IsOptional, IsUUID } from 'class-validator';
 import { CommodityBaseDto } from '../commodity.base.dto';
+import { PageBaseDto } from '../page.base.dto';
 
-const reformatPage = ({ value }: { value: number }): number => {
-  if (!value) {
-    return 1;
-  }
-  return +value;
-};
-
-const reformatLimit = ({ value }: { value: number }): number => {
-  if (!value) {
-    return 10;
-  }
-  return +value;
-};
-
-export class CommodityFindManyQueryDto extends PartialType(
-  PickType(CommodityBaseDto, ['name'] as const)
+export class CommodityFindManyQueryDto extends IntersectionType(
+  PartialType(PickType(CommodityBaseDto, ['name'] as const)),
+  PartialType(PageBaseDto)
 ) {
   @Expose()
   @IsUUID()
   @IsOptional()
   shopUuid: string;
-
-  @Expose()
-  @Transform(reformatPage)
-  @IsInt()
-  @IsOptional()
-  page?: number;
-
-  @Expose()
-  @Transform(reformatLimit)
-  @IsInt()
-  @IsOptional()
-  limit?: number;
 }
