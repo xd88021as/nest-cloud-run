@@ -33,14 +33,22 @@ model CommodityOptions {
 }
 
 model Gender {
-  id        Int      @id
-  name      String   @unique
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  id    Int    @id
+  name  String @unique
   //
-  users     User[]
+  users User[]
 
   @@map("gender")
+}
+
+model Role {
+  id       Int        @id @default(autoincrement())
+  name     String     @unique
+  isPublic Boolean    @default(true) @map("is_available")
+  //
+  users    UserRole[]
+
+  @@map("role")
 }
 
 model Shop {
@@ -75,6 +83,7 @@ model User {
   genderId  Int?       @map("gender_id")
   //
   shops     UserShop[]
+  roles     UserRole[]
 
   @@map("user")
 }
@@ -87,4 +96,14 @@ model UserShop {
 
   @@id([userId, shopId])
   @@map("user_shop")
+}
+
+model UserRole {
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @map("user_id")
+  role   Role @relation(fields: [roleId], references: [id])
+  roleId Int  @map("shop_id")
+
+  @@id([userId, roleId])
+  @@map("user_role")
 }
