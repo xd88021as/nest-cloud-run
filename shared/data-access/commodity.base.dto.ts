@@ -34,6 +34,7 @@ export class CommodityBaseDto {
   static generate(data: CommodityBaseDto): CommodityBaseDto {
     return plainToInstance(CommodityBaseDto, data, {
       exposeDefaultValues: true,
+      excludeExtraneousValues: true,
     });
   }
 }

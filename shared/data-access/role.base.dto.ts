@@ -12,6 +12,9 @@ export class RoleBaseDto {
 
   @Exclude()
   static generate(data: RoleBaseDto): RoleBaseDto {
-    return plainToInstance(RoleBaseDto, data, { exposeDefaultValues: true, excludeExtraneousValues: true });
+    return plainToInstance(RoleBaseDto, data, {
+      exposeDefaultValues: true,
+      excludeExtraneousValues: true
+    });
   }
 }

@@ -47,6 +47,9 @@ export class UserBaseDto {
 
   @Exclude()
   static generate(data: UserBaseDto): UserBaseDto {
-    return plainToInstance(UserBaseDto, data, { exposeDefaultValues: true });
+    return plainToInstance(UserBaseDto, data, {
+      exposeDefaultValues: true,
+      excludeExtraneousValues: true,
+    });
   }
 }

@@ -30,7 +30,10 @@ export class ShopBaseDto {
 
   @Exclude()
   static generate(data: ShopBaseDto): ShopBaseDto {
-    return plainToInstance(ShopBaseDto, data, { exposeDefaultValues: true });
+    return plainToInstance(ShopBaseDto, data, {
+      exposeDefaultValues: true,
+      excludeExtraneousValues: true,
+    });
   }
 }
 
