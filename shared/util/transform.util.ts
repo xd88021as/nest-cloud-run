@@ -27,6 +27,12 @@ export const removeLeadingZeroFromPhoneNumber = ({
   if (!value) {
     return value;
   }
-  const [plusCountryCode, number] = value.split('-');
+  const splitPhoneNumber = (phoneNumber: string) => {
+    const splitIndex = phoneNumber.length - 9;
+    const firstPart = phoneNumber.substring(0, splitIndex);
+    const secondPart = phoneNumber.substring(splitIndex);
+    return [firstPart, secondPart]
+  }
+  const [plusCountryCode, number] = value.includes('-') ? value.split('-') : splitPhoneNumber(value)
   return `${plusCountryCode}-${+number}`;
 };
