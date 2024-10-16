@@ -2,13 +2,21 @@ import { SetIdentityOwners } from 'libs/common/authorization/decorators/identity
 import { IdentityOwnersGuard } from 'libs/common/authorization/guards/identity-owners.guard';
 import { UserService } from 'libs/core/user/services/user.service';
 import {
-    UserShopCreateBodyDto, UserShopUpdateBodyDto
+  UserShopCreateBodyDto,
+  UserShopUpdateBodyDto,
 } from 'shared/data-access/shop/user-shop-body.dto';
 import {
-    UserShopParamDto, UserShopUpdateParamDto
+  UserShopParamDto,
+  UserShopUpdateParamDto,
 } from 'shared/data-access/shop/user-shop-param.dto';
 import {
-    Body, Controller, ForbiddenException, Param, Patch, Post, UseGuards
+  Body,
+  Controller,
+  ForbiddenException,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport/dist/auth.guard';
 import { ShopService } from '../services/shop.service';
@@ -18,7 +26,7 @@ import { ShopService } from '../services/shop.service';
 export class UserShopController {
   constructor(
     private readonly shopService: ShopService,
-    private readonly userService: UserService
+    private readonly userService: UserService,
   ) {}
 
   @Post()
@@ -26,7 +34,7 @@ export class UserShopController {
   @UseGuards(IdentityOwnersGuard)
   async create(
     @Body() body: UserShopCreateBodyDto,
-    @Param() param: UserShopParamDto
+    @Param() param: UserShopParamDto,
   ): Promise<void> {
     const user = await this.userService.findUnique({ where: { uuid: param.userUuid } });
     const shop = await this.shopService.create({
@@ -43,7 +51,7 @@ export class UserShopController {
   @UseGuards(IdentityOwnersGuard)
   async update(
     @Body() body: UserShopUpdateBodyDto,
-    @Param() param: UserShopUpdateParamDto
+    @Param() param: UserShopUpdateParamDto,
   ): Promise<void> {
     const shop = await this.shopService.findUnique({ where: { uuid: param.shopUuid } });
     if (!shop.users.find((userShop) => userShop.user.uuid === param.userUuid)) {

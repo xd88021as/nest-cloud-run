@@ -2,7 +2,8 @@ import { UserService } from 'libs/core/user/services/user.service';
 import { ShopFindUniqueParamDto } from 'shared/data-access/shop/shop-param.dto';
 import { ShopFindManyQueryDto } from 'shared/data-access/shop/shop-query.dto';
 import {
-    ShopFindManyResponseDto, ShopFindUniqueResponseDto
+  ShopFindManyResponseDto,
+  ShopFindUniqueResponseDto,
 } from 'shared/data-access/shop/shop-response.dto';
 import { Controller, Get, NotFoundException, Param, Query, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport/dist/auth.guard';
@@ -13,7 +14,7 @@ import { ShopService } from '../services/shop.service';
 export class ShopController {
   constructor(
     private readonly shopService: ShopService,
-    private readonly userService: UserService
+    private readonly userService: UserService,
   ) {}
 
   @Get()

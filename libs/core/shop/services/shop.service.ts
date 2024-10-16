@@ -1,7 +1,10 @@
 import { ObjectService } from 'libs/util/object/services/object.service';
 import { Injectable } from '@nestjs/common';
 import {
-    ShopData, ShopFindManyParams, ShopFindUniqueParams, UserShopData
+  ShopData,
+  ShopFindManyParams,
+  ShopFindUniqueParams,
+  UserShopData,
 } from '../interfaces/shop.interface';
 import { ShopRepository } from '../repositories/shop.repository';
 import { UserShopRepository } from '../repositories/user-shop.repository';
@@ -11,7 +14,7 @@ export class ShopService {
   constructor(
     private readonly objectService: ObjectService,
     private readonly shopRepository: ShopRepository,
-    private readonly userShopRepository: UserShopRepository
+    private readonly userShopRepository: UserShopRepository,
   ) {}
 
   async create(data: ShopData) {

@@ -9,7 +9,7 @@ export class UserService {
   constructor(
     private readonly cryptoService: CryptoService,
     private readonly objectService: ObjectService,
-    private readonly userRepository: UserRepository
+    private readonly userRepository: UserRepository,
   ) {}
 
   async create(data: UserData) {
@@ -46,7 +46,7 @@ export class UserService {
       ? new Date(
           isoRegex.test(`${date}`)
             ? new Date(date).getTime() - offsetMilliseconds
-            : new Date(date).getTime()
+            : new Date(date).getTime(),
         )
       : undefined;
   }

@@ -1,12 +1,21 @@
 import { ShopService } from 'libs/core/shop/services/shop.service';
 import {
-    ShopCommodityCreateBodyDto, ShopCommodityUpdateBodyDto
+  ShopCommodityCreateBodyDto,
+  ShopCommodityUpdateBodyDto,
 } from 'shared/data-access/commodity/shop-commodity-body.dto';
 import {
-    ShopCommodityParamDto, ShopCommodityUpdateParamDto
+  ShopCommodityParamDto,
+  ShopCommodityUpdateParamDto,
 } from 'shared/data-access/commodity/shop-commodity-param.dto';
 import {
-    Body, Controller, ForbiddenException, Param, Patch, Post, Request, UseGuards
+  Body,
+  Controller,
+  ForbiddenException,
+  Param,
+  Patch,
+  Post,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport/dist/auth.guard';
 import { CommodityService } from '../services/commodity.service';
@@ -16,14 +25,14 @@ import { CommodityService } from '../services/commodity.service';
 export class ShopCommodityController {
   constructor(
     private readonly shopService: ShopService,
-    private readonly commodityService: CommodityService
+    private readonly commodityService: CommodityService,
   ) {}
 
   @Post()
   async createCommodity(
     @Request() req,
     @Body() body: ShopCommodityCreateBodyDto,
-    @Param() param: ShopCommodityParamDto
+    @Param() param: ShopCommodityParamDto,
   ): Promise<void> {
     const shop = await this.shopService.findUnique({ where: { uuid: param.shopUuid } });
     if (!shop.users.find((userShop) => userShop.user.uuid === req.user.userUuid)) {
@@ -40,7 +49,7 @@ export class ShopCommodityController {
   async update(
     @Request() req,
     @Body() body: ShopCommodityUpdateBodyDto,
-    @Param() param: ShopCommodityUpdateParamDto
+    @Param() param: ShopCommodityUpdateParamDto,
   ): Promise<void> {
     const shop = await this.shopService.findUnique({ where: { uuid: param.shopUuid } });
     if (!shop.users.find((userShop) => userShop.user.uuid === req.user.userUuid)) {

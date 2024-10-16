@@ -5,7 +5,8 @@ import { SetIdentityOwners } from 'libs/common/authorization/decorators/identity
 import { UserFindUniqueParamDto } from 'shared/data-access/user/user-param.dto';
 import { UserFindManyQueryDto } from 'shared/data-access/user/user-query.dto';
 import {
-    UserFindManyResponseDto, UserFindUniqueResponseDto
+  UserFindManyResponseDto,
+  UserFindUniqueResponseDto,
 } from 'shared/data-access/user/user-response.dto';
 import { UserService } from '../services/user.service';
 
@@ -26,7 +27,7 @@ export class UserController {
       users.map((user) => ({
         ...user,
         genderName: user.gender?.name,
-      }))
+      })),
     );
   }
 

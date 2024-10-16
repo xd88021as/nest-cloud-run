@@ -1,7 +1,9 @@
 import { PrismaService } from 'libs/common/prisma/services/prisma.service';
 import { Injectable } from '@nestjs/common';
 import {
-    CommodityData, CommodityFindManyParams, CommodityFindUniqueParams
+  CommodityData,
+  CommodityFindManyParams,
+  CommodityFindUniqueParams,
 } from '../interfaces/commodity.interface';
 
 @Injectable()

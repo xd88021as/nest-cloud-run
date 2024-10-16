@@ -7,7 +7,7 @@ import { ObjectService } from 'libs/util/object/services/object.service';
 export class RoleService {
   constructor(
     private readonly objectService: ObjectService,
-    private readonly roleRepository: RoleRepository
+    private readonly roleRepository: RoleRepository,
   ) {}
 
   async create(data: RoleData) {

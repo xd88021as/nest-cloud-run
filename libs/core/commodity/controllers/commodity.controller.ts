@@ -2,7 +2,8 @@ import { ShopService } from 'libs/core/shop/services/shop.service';
 import { CommodityFindUniqueParamDto } from 'shared/data-access/commodity/commodity-param.dto';
 import { CommodityFindManyQueryDto } from 'shared/data-access/commodity/commodity-query.dto';
 import {
-    CommodityFindManyResponseDto, CommodityFindUniqueResponseDto
+  CommodityFindManyResponseDto,
+  CommodityFindUniqueResponseDto,
 } from 'shared/data-access/commodity/commodity-response.dto';
 import { Controller, Get, NotFoundException, Param, Query, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport/dist/auth.guard';
@@ -13,7 +14,7 @@ import { CommodityService } from '../services/commodity.service';
 export class CommodityController {
   constructor(
     private readonly commodityService: CommodityService,
-    private readonly shopService: ShopService
+    private readonly shopService: ShopService,
   ) {}
 
   @Get()
@@ -27,13 +28,13 @@ export class CommodityController {
       commoditys.map((commodity) => ({
         ...commodity,
         shopName: commodity.shop.name,
-      }))
+      })),
     );
   }
 
   @Get(':uuid')
   async findUnique(
-    @Param() param: CommodityFindUniqueParamDto
+    @Param() param: CommodityFindUniqueParamDto,
   ): Promise<CommodityFindUniqueResponseDto> {
     const commodity = await this.commodityService.findUnique({ where: { uuid: param.uuid } });
     if (!commodity) {

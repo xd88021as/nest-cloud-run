@@ -1,7 +1,9 @@
 import { ObjectService } from 'libs/util/object/services/object.service';
 import { Injectable } from '@nestjs/common';
 import {
-    CommodityData, CommodityFindManyParams, CommodityFindUniqueParams
+  CommodityData,
+  CommodityFindManyParams,
+  CommodityFindUniqueParams,
 } from '../interfaces/commodity.interface';
 import { CommodityRepository } from '../repositories/commodity.repository';
 
@@ -9,7 +11,7 @@ import { CommodityRepository } from '../repositories/commodity.repository';
 export class CommodityService {
   constructor(
     private readonly objectService: ObjectService,
-    private readonly commodityRepository: CommodityRepository
+    private readonly commodityRepository: CommodityRepository,
   ) {}
 
   async create(data: CommodityData) {
