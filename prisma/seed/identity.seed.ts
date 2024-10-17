@@ -1,13 +1,13 @@
 import { Prisma, PrismaClient } from '@prisma/client';
 
-export const seedRole = async (prisma: PrismaClient) => {
-  const args: Prisma.RoleUpsertArgs[] = seeds.map((seed) => ({
+export const seedIdentity = async (prisma: PrismaClient) => {
+  const args: Prisma.IdentityUpsertArgs[] = seeds.map((seed) => ({
     where: { id: seed.id },
     update: {},
     create: seed,
   }));
   for (const arg of args) {
-    await prisma.role.upsert(arg);
+    await prisma.identity.upsert(arg);
   }
 };
 

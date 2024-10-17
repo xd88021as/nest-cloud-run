@@ -41,14 +41,14 @@ model Gender {
   @@map("gender")
 }
 
-model Role {
+model Identity {
   id       Int        @id @default(autoincrement())
   name     String     @unique
   isPublic Boolean    @default(true) @map("is_available")
   //
-  users    UserRole[]
+  users    UserIdentity[]
 
-  @@map("role")
+  @@map("identity")
 }
 
 model Shop {
@@ -83,7 +83,7 @@ model User {
   genderId  Int?       @map("gender_id")
   //
   shops     UserShop[]
-  roles     UserRole[]
+  identitys     UserIdentity[]
 
   @@map("user")
 }
@@ -98,12 +98,12 @@ model UserShop {
   @@map("user_shop")
 }
 
-model UserRole {
+model UserIdentity {
   user   User @relation(fields: [userId], references: [id])
   userId Int  @map("user_id")
-  role   Role @relation(fields: [roleId], references: [id])
-  roleId Int  @map("shop_id")
+  identity   Identity @relation(fields: [identityId], references: [id])
+  identityId Int  @map("shop_id")
 
-  @@id([userId, roleId])
-  @@map("user_role")
+  @@id([userId, identityId])
+  @@map("user_identity")
 }

@@ -1,15 +1,15 @@
-export interface RoleData {
+export interface IdentityData {
   name: string;
   isPublic?: boolean;
 }
 
-export interface RoleFindManyParams {
+export interface IdentityFindManyParams {
   where: {
     isPublic?: boolean;
   };
 }
 
-export interface RoleFindUniqueParams {
+export interface IdentityFindUniqueParams {
   where: {
     name: string;
   };

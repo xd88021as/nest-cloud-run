@@ -1,7 +1,7 @@
 import { Exclude, Expose, plainToInstance } from 'class-transformer';
 import { IsBoolean, IsString } from 'class-validator';
 
-export class RoleBaseDto {
+export class IdentityBaseDto {
   @Expose()
   @IsString()
   name: string;
@@ -11,8 +11,8 @@ export class RoleBaseDto {
   isPublic: boolean;
 
   @Exclude()
-  static generate(data: RoleBaseDto): RoleBaseDto {
-    return plainToInstance(RoleBaseDto, data, {
+  static generate(data: IdentityBaseDto): IdentityBaseDto {
+    return plainToInstance(IdentityBaseDto, data, {
       exposeDefaultValues: true,
       excludeExtraneousValues: true
     });

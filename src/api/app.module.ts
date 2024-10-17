@@ -7,7 +7,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './controllers/app.controller';
 import { AppService } from './services/app.service';
-import { RoleModule } from 'libs/core/role/role.module';
+import { IdentityModule } from 'libs/core/identity/identity.module';
 
 @Module({
   imports: [
@@ -17,7 +17,7 @@ import { RoleModule } from 'libs/core/role/role.module';
       load: [configuration],
       isGlobal: true,
     }),
-    RoleModule,
+    IdentityModule,
     ShopModule,
     UserModule,
   ],
