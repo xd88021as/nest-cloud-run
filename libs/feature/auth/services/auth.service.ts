@@ -9,6 +9,9 @@ export class AuthService {
   generateJwt(payload: JwtPayload): string {
     return this.jwtService.sign({
       userUuid: payload.userUuid,
+      staffUuid: payload.staffUuid,
+      customerUuid: payload.customerUuid,
+      shopkeeperUuid: payload.shopkeeperUuid,
     });
   }
 }

@@ -42,9 +42,9 @@ model Gender {
 }
 
 model Identity {
-  id       Int        @id @default(autoincrement())
-  name     String     @unique
-  isPublic Boolean    @default(true) @map("is_available")
+  id       Int            @id @default(autoincrement())
+  name     String         @unique
+  isPublic Boolean        @default(true) @map("is_available")
   //
   users    UserIdentity[]
 
@@ -68,22 +68,22 @@ model Shop {
 }
 
 model User {
-  id        Int        @id @default(autoincrement())
-  uuid      String     @unique @default(uuid()) @db.Uuid
-  phone     String?    @unique
-  email     String?    @unique
+  id        Int            @id @default(autoincrement())
+  uuid      String         @unique @default(uuid()) @db.Uuid
+  phone     String?        @unique
+  email     String?        @unique
   password  String
-  firstName String?    @map("first_name")
-  lastName  String?    @map("last_name")
-  birthDate DateTime?  @map("birth_date") @db.Date
-  createdAt DateTime   @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt DateTime   @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  firstName String?        @map("first_name")
+  lastName  String?        @map("last_name")
+  birthDate DateTime?      @map("birth_date") @db.Date
+  createdAt DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime       @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
   //
-  gender    Gender?    @relation(fields: [genderId], references: [id])
-  genderId  Int?       @map("gender_id")
+  gender    Gender?        @relation(fields: [genderId], references: [id])
+  genderId  Int?           @map("gender_id")
   //
   shops     UserShop[]
-  identitys     UserIdentity[]
+  identitys UserIdentity[]
 
   @@map("user")
 }
@@ -99,10 +99,12 @@ model UserShop {
 }
 
 model UserIdentity {
-  user   User @relation(fields: [userId], references: [id])
-  userId Int  @map("user_id")
+  uuid       String   @unique @default(uuid()) @db.Uuid
+  //
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int      @map("user_id")
   identity   Identity @relation(fields: [identityId], references: [id])
-  identityId Int  @map("shop_id")
+  identityId Int      @map("shop_id")
 
   @@id([userId, identityId])
   @@map("user_identity")

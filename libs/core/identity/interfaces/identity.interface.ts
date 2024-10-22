@@ -14,3 +14,23 @@ export interface IdentityFindUniqueParams {
     name: string;
   };
 }
+
+//user-identity
+
+export interface UserIdentityData {
+  identityId: number;
+  userId: number;
+}
+
+export interface UserIdentityFindManyParams {
+  where: {
+    identityId?: number;
+    userId?: number;
+  };
+}
+
+export interface UserIdentityFindUniqueParams {
+  where: {
+    uuid: string;
+  };
+}

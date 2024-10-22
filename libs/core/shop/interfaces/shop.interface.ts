@@ -21,6 +21,8 @@ export interface ShopFindUniqueParams {
   };
 }
 
+//user-shop
+
 export interface UserShopData {
   shopId: number;
   userId: number;
