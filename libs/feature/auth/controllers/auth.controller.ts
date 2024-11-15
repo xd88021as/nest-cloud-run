@@ -7,12 +7,14 @@ import { AuthSignInResponseDto } from 'shared/data-access/auth/auth-response.dto
 import { Body, Controller, ForbiddenException, NotFoundException, Post } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { IdentityService } from 'libs/core/identity/services/identity.service';
+import { ShopService } from 'libs/core/shop/services/shop.service';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly identityService: IdentityService,
+    private readonly shopService: ShopService,
     private readonly userService: UserService,
   ) {}
 
@@ -32,7 +34,12 @@ export class AuthController {
       acc[key] = userIdentity.uuid;
       return acc;
     }, {});
-    const jwt = this.authService.generateJwt({ userUuid: user.uuid, ...identityUuids });
+    const shops = await this.shopService.findMany({ where: { userId: user.id } });
+    const jwt = this.authService.generateJwt({
+      userUuid: user.uuid,
+      ...identityUuids,
+      shopUuids: shops.map((shop) => shop.uuid),
+    });
     return AuthSignInResponseDto.generate(jwt);
   }
 
@@ -43,8 +50,6 @@ export class AuthController {
     if (user) {
       throw new ForbiddenException();
     }
-    const newUser = await this.userService.create({ phone, password });
-    const identity = await this.identityService.findUnique({ where: { name: 'customer' } });
-    await this.identityService.createUserIdentity({ identityId: identity.id, userId: newUser.id });
+    await this.userService.create({ phone, password });
   }
 }

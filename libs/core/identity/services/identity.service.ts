@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import {
   IdentityData,
-  IdentityFindManyParams,
   IdentityFindUniqueParams,
   UserIdentityData,
   UserIdentityFindManyParams,
@@ -24,8 +23,8 @@ export class IdentityService {
     return identity;
   }
 
-  async findMany(params: IdentityFindManyParams) {
-    const identitys = await this.identityRepository.findMany(params);
+  async listStatus() {
+    const identitys = await this.identityRepository.findMany();
     return identitys;
   }
 
@@ -34,11 +33,6 @@ export class IdentityService {
       return null;
     }
     const identity = await this.identityRepository.findUnique(params);
-    return identity;
-  }
-
-  async update(id: number, data: Partial<IdentityData>) {
-    const identity = await this.identityRepository.update(id, data);
     return identity;
   }
 

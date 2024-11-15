@@ -15,7 +15,9 @@ export class IdentityOwnersGuard implements CanActivate {
       return true;
     }
     const request = context.switchToHttp().getRequest();
-    console.log(request)
+    if (request.user.staffUuid) {
+      return true;
+    }
     return identityOwners.some(({ identity, reqField, uuidName }) => {
       if (reqField === 'body') {
         return request.user[`${identity}Uuid`] === request.body[uuidName];

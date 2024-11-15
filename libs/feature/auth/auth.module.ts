@@ -9,6 +9,7 @@ import { AuthController } from './controllers/auth.controller';
 import { AuthService } from './services/auth.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { IdentityModule } from 'libs/core/identity/identity.module';
+import { ShopModule } from 'libs/core/shop/shop.module';
 @Module({
   imports: [
     IdentityModule,
@@ -24,6 +25,7 @@ import { IdentityModule } from 'libs/core/identity/identity.module';
     }),
     PassportModule,
     PrismaModule,
+    ShopModule,
     UserModule,
   ],
   controllers: [AuthController],

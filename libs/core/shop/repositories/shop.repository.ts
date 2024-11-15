@@ -10,6 +10,7 @@ export class ShopRepository {
     const shop = await this.prisma.shop.create({
       data: {
         name: data.name,
+        statusId: data.statusId,
         localPhoneNumber: data.localPhoneNumber,
         mobilePhoneNumber: data.mobilePhoneNumber,
         introduce: data.introduce,

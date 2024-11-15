@@ -1,5 +1,6 @@
 export interface ShopData {
   name: string;
+  statusId: number;
   localPhoneNumber?: string;
   mobilePhoneNumber?: string;
   introduce?: string;
@@ -8,8 +9,8 @@ export interface ShopData {
 export interface ShopFindManyParams {
   where: {
     userId?: number;
-    skip: number;
-    take: number;
+    skip?: number;
+    take?: number;
   };
 }
 

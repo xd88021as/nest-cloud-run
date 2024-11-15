@@ -44,7 +44,6 @@ model Gender {
 model Identity {
   id       Int            @id @default(autoincrement())
   name     String         @unique
-  isPublic Boolean        @default(true) @map("is_available")
   //
   users    UserIdentity[]
 
@@ -54,17 +53,29 @@ model Identity {
 model Shop {
   id                Int         @id @default(autoincrement())
   uuid              String      @unique @default(uuid()) @db.Uuid
-  name              String      @unique @map("name")
+  name              String      @unique
   localPhoneNumber  String?     @unique @map("local_phone_number")
   mobilePhoneNumber String?     @map("mobile_phone_number")
   introduce         String?     @map("introduce")
   createdAt         DateTime    @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt         DateTime    @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
   //
+  status            ShopStatus  @relation(fields: [statusId], references: [id])
+  statusId          Int         @map("status_id")
+  //
   commoditys        Commodity[]
   users             UserShop[]
 
   @@map("shop")
+}
+
+model ShopStatus {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  //
+  shop Shop[]
+
+  @@map("shop_status")
 }
 
 model User {
@@ -104,7 +115,7 @@ model UserIdentity {
   user       User     @relation(fields: [userId], references: [id])
   userId     Int      @map("user_id")
   identity   Identity @relation(fields: [identityId], references: [id])
-  identityId Int      @map("shop_id")
+  identityId Int      @map("identity_id")
 
   @@id([userId, identityId])
   @@map("user_identity")

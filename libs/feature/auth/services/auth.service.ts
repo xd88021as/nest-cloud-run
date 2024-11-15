@@ -10,8 +10,7 @@ export class AuthService {
     return this.jwtService.sign({
       userUuid: payload.userUuid,
       staffUuid: payload.staffUuid,
-      customerUuid: payload.customerUuid,
-      shopkeeperUuid: payload.shopkeeperUuid,
+      shopUuids: payload.shopUuids,
     });
   }
 }

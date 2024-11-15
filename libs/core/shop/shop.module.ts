@@ -7,11 +7,12 @@ import { UserShopController } from './controllers/user-shop.controller';
 import { ShopRepository } from './repositories/shop.repository';
 import { UserShopRepository } from './repositories/user-shop.repository';
 import { ShopService } from './services/shop.service';
+import { ShopStatusRepository } from './repositories/shop-status.repository';
 
 @Module({
   imports: [ObjectModule, PrismaModule, UserModule],
   controllers: [ShopController, UserShopController],
-  providers: [ShopRepository, ShopService, UserShopRepository],
+  providers: [ShopRepository, ShopService, ShopStatusRepository, UserShopRepository],
   exports: [ShopService],
 })
 export class ShopModule {}
