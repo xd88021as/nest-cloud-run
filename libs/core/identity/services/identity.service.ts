@@ -23,7 +23,7 @@ export class IdentityService {
     return identity;
   }
 
-  async listStatus() {
+  async findMany() {
     const identitys = await this.identityRepository.findMany();
     return identitys;
   }
