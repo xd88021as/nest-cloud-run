@@ -37,8 +37,10 @@ export class UserShopController {
     @Param() param: UserShopParamDto,
   ): Promise<void> {
     const user = await this.userService.findUnique({ where: { uuid: param.userUuid } });
+    const status = await this.shopService.findStatus('pending')
     const shop = await this.shopService.create({
       name: body.name,
+      statusId: status.id,
       localPhoneNumber: body.localPhoneNumber,
       mobilePhoneNumber: body.mobilePhoneNumber,
       introduce: body.introduce,

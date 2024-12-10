@@ -1,5 +1,5 @@
 export interface IdentityOwner {
-  identity: 'user';
+  identity: 'user' | 'shop';
   reqField: 'body' | 'param' | 'query';
   uuidName: string;
 }

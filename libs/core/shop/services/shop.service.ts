@@ -8,12 +8,14 @@ import {
 } from '../interfaces/shop.interface';
 import { ShopRepository } from '../repositories/shop.repository';
 import { UserShopRepository } from '../repositories/user-shop.repository';
+import { ShopStatusRepository } from '../repositories/shop-status.repository';
 
 @Injectable()
 export class ShopService {
   constructor(
     private readonly objectService: ObjectService,
     private readonly shopRepository: ShopRepository,
+    private readonly statusRepository: ShopStatusRepository,
     private readonly userShopRepository: UserShopRepository,
   ) {}
 
@@ -38,6 +40,18 @@ export class ShopService {
   async update(id: number, data: Partial<ShopData>) {
     const shop = await this.shopRepository.update(id, data);
     return shop;
+  }
+
+  // shop-status
+
+  async listStatus() {
+    const statuses = await this.statusRepository.findMany();
+    return statuses;
+  }
+
+  async findStatus(name: string) {
+    const status = await this.statusRepository.findUnique({ where: { name } });
+    return status;
   }
 
   // user-shop

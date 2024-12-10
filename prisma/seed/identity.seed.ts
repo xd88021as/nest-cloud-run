@@ -12,7 +12,5 @@ export const seedIdentity = async (prisma: PrismaClient) => {
 };
 
 const seeds = [
-  { id: 1, name: 'staff', isPublic: false},
-  { id: 2, name: 'customer', isPublic: true},
-  { id: 3, name: 'shopkeeper', isPublic: true},
+  { id: 1, name: 'staff'},
 ];
