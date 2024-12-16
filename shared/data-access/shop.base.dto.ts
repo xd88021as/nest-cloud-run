@@ -15,6 +15,10 @@ export class ShopBaseDto {
   name: string;
 
   @Expose()
+  @IsString()
+  statusName: string;
+
+  @Expose()
   @IsPhoneNumber()
   @Transform(convertLocalPhoneNumberToInternationalNumber)
   localPhoneNumber: string;
