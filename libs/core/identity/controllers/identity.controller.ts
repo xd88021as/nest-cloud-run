@@ -10,7 +10,7 @@ export class IdentityController {
 
   @Get()
   async list(): Promise<IdentityListResponseDto> {
-    const status = await this.identityService.listStatus();
-    return IdentityListResponseDto.generate(status.map((status) => status.name));
+    const identitys = await this.identityService.findMany();
+    return IdentityListResponseDto.generate(identitys.map((identity) => identity.name));
   }
 }
