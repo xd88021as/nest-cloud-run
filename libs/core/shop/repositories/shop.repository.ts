@@ -21,8 +21,12 @@ export class ShopRepository {
 
   async findMany(params: ShopFindManyParams) {
     const shops = await this.prisma.shop.findMany({
+      include: {
+        status: { select: { name: true } },
+      },
       where: {
         users: params.where.userId ? { some: { userId: params.where.userId } } : undefined,
+        statusId: params.where.statusId,
       },
       skip: params.where.skip,
       take: params.where.take,
@@ -34,10 +38,12 @@ export class ShopRepository {
     const shop = await this.prisma.shop.findUnique({
       include: {
         users: { select: { user: { select: { uuid: true } } } },
+        status: { select: { name: true } },
       },
       where: {
         id: params.where.id,
         uuid: params.where.uuid,
+        name: params.where.name,
         localPhoneNumber: params.where.localPhoneNumber,
       },
     });
@@ -48,6 +54,7 @@ export class ShopRepository {
     const shop = await this.prisma.shop.update({
       data: {
         name: data.name,
+        statusId: data.statusId,
         localPhoneNumber: data.localPhoneNumber,
         mobilePhoneNumber: data.mobilePhoneNumber,
         introduce: data.introduce,

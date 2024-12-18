@@ -7,5 +7,5 @@ export class ShopCommodityCreateBodyDto extends PickType(CommodityBaseDto, [
 ] as const) {}
 
 export class ShopCommodityUpdateBodyDto extends PartialType(
-  PickType(CommodityBaseDto, ['name', 'unitCent'] as const)
+  PickType(CommodityBaseDto, ['name', 'unitCent'] as const),
 ) {}

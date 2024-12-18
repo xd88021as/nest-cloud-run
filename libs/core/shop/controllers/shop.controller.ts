@@ -20,11 +20,16 @@ export class ShopController {
   @Get()
   async findMany(@Query() query: ShopFindManyQueryDto): Promise<ShopFindManyResponseDto> {
     const user = await this.userService.findUnique({ where: { uuid: query.userUuid } });
+    const status = query.statusName
+      ? await this.shopService.findStatus(query.statusName)
+      : undefined;
     const skip = (query.page - 1) * query.limit;
     const shops = await this.shopService.findMany({
-      where: { userId: user?.id, skip, take: query.limit },
+      where: { userId: user?.id, statusId: status?.id, skip, take: query.limit },
     });
-    return ShopFindManyResponseDto.generate(shops);
+    return ShopFindManyResponseDto.generate(
+      shops.map((shop) => ({ ...shop, statusName: shop.status.name })),
+    );
   }
 
   @Get(':uuid')
@@ -33,6 +38,6 @@ export class ShopController {
     if (!shop) {
       throw new NotFoundException();
     }
-    return ShopFindUniqueResponseDto.generate(shop);
+    return ShopFindUniqueResponseDto.generate({ ...shop, statusName: shop.status.name });
   }
 }

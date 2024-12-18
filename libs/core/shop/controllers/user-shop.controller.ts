@@ -36,16 +36,20 @@ export class UserShopController {
     @Body() body: UserShopCreateBodyDto,
     @Param() param: UserShopParamDto,
   ): Promise<void> {
+    const shop = await this.shopService.findUnique({ where: { name: body.name } });
+    if (shop) {
+      throw new ForbiddenException('Duplicate name');
+    }
     const user = await this.userService.findUnique({ where: { uuid: param.userUuid } });
-    const status = await this.shopService.findStatus('pending')
-    const shop = await this.shopService.create({
+    const status = await this.shopService.findStatus('pending');
+    const newShop = await this.shopService.create({
       name: body.name,
       statusId: status.id,
       localPhoneNumber: body.localPhoneNumber,
       mobilePhoneNumber: body.mobilePhoneNumber,
       introduce: body.introduce,
     });
-    await this.shopService.createUserShop({ shopId: shop.id, userId: user.id });
+    await this.shopService.createUserShop({ shopId: newShop.id, userId: user.id });
   }
 
   @Patch(':shopUuid')
@@ -59,8 +63,13 @@ export class UserShopController {
     if (!shop.users.find((userShop) => userShop.user.uuid === param.userUuid)) {
       throw new ForbiddenException();
     }
+    if (await this.shopService.checkShopNameDuplicate(shop.uuid, body.name)) {
+      throw new ForbiddenException('Duplicate name');
+    }
+    const status = body.statusName ? await this.shopService.findStatus(body.statusName) : undefined;
     await this.shopService.update(shop.id, {
       name: body.name,
+      statusId: status?.id,
       localPhoneNumber: body.localPhoneNumber,
       mobilePhoneNumber: body.mobilePhoneNumber,
       introduce: body.introduce,

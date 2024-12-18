@@ -9,6 +9,7 @@ export interface ShopData {
 export interface ShopFindManyParams {
   where: {
     userId?: number;
+    statusId?: number;
     skip?: number;
     take?: number;
   };
@@ -18,6 +19,7 @@ export interface ShopFindUniqueParams {
   where: {
     id?: number;
     uuid?: string;
+    name?: string;
     localPhoneNumber?: string;
   };
 }
