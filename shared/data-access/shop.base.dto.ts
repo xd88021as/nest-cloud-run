@@ -1,5 +1,5 @@
 import { Exclude, Expose, Transform, plainToInstance } from 'class-transformer';
-import { IsPhoneNumber, IsString, IsUUID } from 'class-validator';
+import { IsNotEmpty, IsPhoneNumber, IsString, IsUUID } from 'class-validator';
 import {
   convertLocalPhoneNumberToInternationalNumber,
   removeLeadingZeroFromPhoneNumber,
@@ -12,10 +12,12 @@ export class ShopBaseDto {
 
   @Expose()
   @IsString()
+  @IsNotEmpty({ message: 'Name cannot be an empty string' })
   name: string;
 
   @Expose()
   @IsString()
+  @IsNotEmpty({ message: 'Status name cannot be an empty string' })
   statusName: string;
 
   @Expose()
@@ -26,6 +28,7 @@ export class ShopBaseDto {
   @Expose()
   @IsPhoneNumber()
   @Transform(removeLeadingZeroFromPhoneNumber)
+  @IsNotEmpty({ message: 'Mobile phone number cannot be an empty string' })
   mobilePhoneNumber: string;
 
   @Expose()
