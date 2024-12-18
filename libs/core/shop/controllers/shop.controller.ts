@@ -20,7 +20,7 @@ export class ShopController {
   @Get()
   async findMany(@Query() query: ShopFindManyQueryDto): Promise<ShopFindManyResponseDto> {
     const user = await this.userService.findUnique({ where: { uuid: query.userUuid } });
-    const status = query?.statusName
+    const status = query.statusName
       ? await this.shopService.findStatus(query.statusName)
       : undefined;
     const skip = (query.page - 1) * query.limit;

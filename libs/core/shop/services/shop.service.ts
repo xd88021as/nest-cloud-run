@@ -60,4 +60,9 @@ export class ShopService {
     const userShop = await this.userShopRepository.create(data);
     return userShop;
   }
+
+  async checkShopNameDuplicate(shopUuid: string, name: string) {
+    const shop = await this.findUnique({ where: { name } });
+    return shop && shop.uuid !== shopUuid;
+  }
 }

@@ -43,6 +43,7 @@ export class ShopRepository {
       where: {
         id: params.where.id,
         uuid: params.where.uuid,
+        name: params.where.name,
         localPhoneNumber: params.where.localPhoneNumber,
       },
     });
