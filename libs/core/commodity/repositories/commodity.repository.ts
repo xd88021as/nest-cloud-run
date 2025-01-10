@@ -28,7 +28,7 @@ export class CommodityRepository {
         shop: { select: { name: true } },
       },
       where: {
-        name: params.where.name,
+        name: { contains: params.where.name },
         shopId: params.where.shopId,
       },
     });
