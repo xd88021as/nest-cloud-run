@@ -19,10 +19,9 @@ export class CommodityController {
 
   @Get()
   async findMany(@Query() query: CommodityFindManyQueryDto): Promise<CommodityFindManyResponseDto> {
-    const shop = await this.shopService.findUnique({ where: { uuid: query.shopUuid } });
     const skip = (query.page - 1) * query.limit;
     const commoditys = await this.commodityService.findMany({
-      where: { name: query.name, shopId: shop.id, skip, take: query.limit },
+      where: { name: query.name, skip, take: query.limit },
     });
     return CommodityFindManyResponseDto.generate(
       commoditys.map((commodity) => ({
