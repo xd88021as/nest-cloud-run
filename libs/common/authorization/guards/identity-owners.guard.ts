@@ -9,7 +9,7 @@ export class IdentityOwnersGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const identityOwners = this.reflector.get<IdentityOwner[]>(
       'identityOwners',
-      context.getHandler()
+      context.getHandler(),
     );
     if (!identityOwners) {
       return true;
@@ -19,11 +19,11 @@ export class IdentityOwnersGuard implements CanActivate {
       return true;
     }
     return identityOwners.some(({ identity, reqField, uuidName }) => {
-      if (reqField === 'body') {
-        return request.user[`${identity}Uuid`] === request.body[uuidName];
-      } else if (reqField === 'param') {
-        return request.user[`${identity}Uuid`] === request.params[uuidName];
+      const source = reqField === 'body' ? request.body : request.params;
+      if (identity === 'shop') {
+        return request.user['shopUuids']?.includes(source[uuidName]);
       }
+      return request.user[`${identity}Uuid`] === source[uuidName];
     });
   }
 }
