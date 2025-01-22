@@ -24,7 +24,6 @@ export class CommodityRepository {
   async findMany(params: CommodityFindManyParams) {
     const commodity = await this.prisma.commodity.findMany({
       include: {
-        options: { select: { name: true, unitCent: true } },
         shop: { select: { name: true } },
       },
       where: {
@@ -38,7 +37,6 @@ export class CommodityRepository {
   async findUnique(params: CommodityFindUniqueParams) {
     const commodity = await this.prisma.commodity.findUnique({
       include: {
-        options: { select: { name: true, unitCent: true } },
         shop: { select: { name: true } },
       },
       where: {

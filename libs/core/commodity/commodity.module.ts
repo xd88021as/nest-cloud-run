@@ -5,10 +5,11 @@ import { ShopModule } from '../shop/shop.module';
 import { CommodityController } from './controllers/commodity.controller';
 import { CommodityRepository } from './repositories/commodity.repository';
 import { CommodityService } from './services/commodity.service';
+import { ShopCommodityController } from './controllers/shop-commodity.controller';
 
 @Module({
   imports: [ObjectModule, PrismaModule, ShopModule],
-  controllers: [CommodityController],
+  controllers: [CommodityController, ShopCommodityController],
   providers: [CommodityRepository, CommodityService],
   exports: [CommodityService],
 })
