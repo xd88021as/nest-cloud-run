@@ -15,21 +15,8 @@ model Commodity {
   //
   shop     Shop               @relation(fields: [shopId], references: [id])
   shopId   Int                @map("shop_id")
-  //
-  options  CommodityOptions[]
 
   @@map("commodity")
-}
-
-model CommodityOptions {
-  id          Int       @id @default(autoincrement())
-  name        String
-  unitCent    Int       @map("unit_cent")
-  //
-  commodity   Commodity @relation(fields: [commodityId], references: [id])
-  commodityId Int       @map("commodity_id")
-
-  @@map("commodity_options")
 }
 
 model Gender {
