@@ -19,6 +19,8 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport/dist/auth.guard';
 import { CommodityService } from '../services/commodity.service';
+import { SetIdentityOwners } from 'libs/common/authorization/decorators/identity-owners.decorator';
+import { IdentityOwnersGuard } from 'libs/common/authorization/guards/identity-owners.guard';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('shops/:shopUuid/commoditys')
@@ -29,6 +31,8 @@ export class ShopCommodityController {
   ) {}
 
   @Post()
+  @SetIdentityOwners({ identity: 'shop', reqField: 'param', uuidName: 'shopUuid' })
+  @UseGuards(IdentityOwnersGuard)
   async createCommodity(
     @Request() req,
     @Body() body: ShopCommodityCreateBodyDto,
@@ -46,6 +50,8 @@ export class ShopCommodityController {
   }
 
   @Patch(':commodityUuid')
+  @SetIdentityOwners({ identity: 'shop', reqField: 'param', uuidName: 'shopUuid' })
+  @UseGuards(IdentityOwnersGuard)
   async update(
     @Request() req,
     @Body() body: ShopCommodityUpdateBodyDto,

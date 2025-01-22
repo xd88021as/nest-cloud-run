@@ -1,11 +1,5 @@
-import { Exclude, Expose, Type, plainToInstance } from 'class-transformer';
-import {
-  IsArray,
-  IsNumber,
-  IsString,
-  IsUUID,
-  ValidateNested,
-} from 'class-validator';
+import { Exclude, Expose, plainToInstance } from 'class-transformer';
+import { IsNumber, IsString, IsUUID } from 'class-validator';
 
 export class CommodityBaseDto {
   @Expose()
@@ -24,12 +18,6 @@ export class CommodityBaseDto {
   @IsString()
   shopName: string;
 
-  @Expose()
-  @IsArray()
-  @ValidateNested()
-  @Type(() => CommodityOptionBaseDto)
-  options: CommodityOptionBaseDto[];
-
   @Exclude()
   static generate(data: CommodityBaseDto): CommodityBaseDto {
     return plainToInstance(CommodityBaseDto, data, {
@@ -37,14 +25,4 @@ export class CommodityBaseDto {
       excludeExtraneousValues: true,
     });
   }
-}
-
-export class CommodityOptionBaseDto {
-  @Expose()
-  @IsString()
-  name: string;
-
-  @Expose()
-  @IsNumber()
-  unitCent: number;
 }

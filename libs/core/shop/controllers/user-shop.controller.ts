@@ -53,7 +53,7 @@ export class UserShopController {
   }
 
   @Patch(':shopUuid')
-  @SetIdentityOwners({ identity: 'user', reqField: 'param', uuidName: 'userUuid' })
+  @SetIdentityOwners({ identity: 'shop', reqField: 'param', uuidName: 'shopUuid' })
   @UseGuards(IdentityOwnersGuard)
   async update(
     @Body() body: UserShopUpdateBodyDto,
