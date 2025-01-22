@@ -1,5 +1,5 @@
 export interface JwtPayload {
-  userUuid: string;
   staffUuid?: string;
+  userUuid: string;
   shopUuids?: string[];
 }
